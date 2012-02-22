@@ -1,17 +1,56 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.jenkins-ci.plugins</groupId>
+    <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>1.399</version><!-- which version of Jenkins is this plugin built against? -->
+    <!--
+      which version of Hudson is this plugin built against?
+    -->
+    <version>1.355</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <groupId>memegen</groupId>
-  <artifactId>memegen</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <groupId>hudson.plugins.memegen</groupId>
+  <artifactId>meme-generator</artifactId>
+  <version>0.1-UNSTABLE</version>
   <packaging>hpi</packaging>
+  <name>Meme Generator</name>
+  <url>http://wiki.hudson-ci.org/display/HUDSON/Bamboo+Notifier</url>
 
-  <!-- get every artifact through maven.glassfish.org, which proxies all the artifacts that we need -->
+  <scm>
+    <connection>scm:git:https://github.com/joonty/memegen.git</connection>
+    <developerConnection>scm:git:https://github.com/joonty/memegen.git</developerConnection>
+    <url>https://github.com/joonty/memegen</url>
+  </scm>
+
+  <properties>
+    <!-- which version of Hudson is this plugin built against? -->
+    <hudson.version>${project.parent.version}</hudson.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.net.id>asgeirn</java.net.id>
+  </properties>
+
+  <developers>
+    <developer>
+      <id>asgeirn</id>
+      <email>asgeir@twingine.no</email>
+      <name>Asgeir Storesund Nilsen</name>
+      <timezone>1</timezone>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <distribution>repo</distribution>
+      <name>The MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+    </license>
+  </licenses>
+
+  <!--
+    get every artifact through maven.glassfish.org, which proxies all
+    the artifacts that we need
+  -->
   <repositories>
     <repository>
       <id>m.g.o-public</id>
@@ -25,4 +64,18 @@
       <url>http://maven.glassfish.org/content/groups/public/</url>
     </pluginRepository>
   </pluginRepositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>commons-httpclient</groupId>
+      <artifactId>commons-httpclient</artifactId>
+      <version>3.1</version>
+    </dependency>
+    <dependency>
+	<groupId>com.googlecode.json-simple</groupId>
+	<artifactId>json-simple</artifactId>
+	<version>1.1</version>
+  </dependency>
+  </dependencies>
+
 </project>
