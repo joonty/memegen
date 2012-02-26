@@ -52,11 +52,19 @@ class MemegeneratorJSONException extends Exception {
 public class MemegeneratorAPI {
 	private static final String APIURL = "http://version1.api.memegenerator.net";
 
+	private String username;
+	private String password;
+	
+	MemegeneratorAPI(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
+	
 	public boolean instanceCreate(Meme meme) {
 		boolean ret = false;
 		HashMap<String,String> vars = new HashMap();
-		vars.put("username", "joonty");
-		vars.put("password", "turrkey");
+		vars.put("username", username);
+		vars.put("password", password);
 		vars.put("text0", meme.getUpperText());
 		vars.put("text1", meme.getLowerText());
 		vars.put("generatorID", ""+meme.getGeneratorID());

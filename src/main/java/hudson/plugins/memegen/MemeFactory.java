@@ -70,7 +70,7 @@ public class MemeFactory {
 
 	protected static String textReplace(String input, String buildNumber, String projectName) {
 		String text = new String(input);
-		if (text.matches("%day%")) {
+		if (text.matches("day")) {
 			Calendar now = Calendar.getInstance();
 
 			//create an array of days
