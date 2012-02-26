@@ -44,7 +44,6 @@ public class MemeFactory {
 		String projectName = build.getProject().getDisplayName();
 		String users = userSetToString(build.getCulprits());
 		String text0 = textReplace(sel[2],buildName,projectName,users);
-		System.err.println("Final Text: "+text0);
 		String text1 = textReplace(sel[3],buildName,projectName,users);
 		return new Meme(Integer.parseInt(sel[0]),Integer.parseInt(sel[1]),text0,text1);
 	}
@@ -60,18 +59,17 @@ public class MemeFactory {
 			};
 		} else {
 			config = new String[][] {
-				{"74","2485","Build %build%","Have a drink"}
+				{"74","2485","Build %buildNumber%","Have a drink"}
 			};
 		}
 
 		Random rand = new Random();
-		int key = rand.nextInt(config.length+1);
+		int key = rand.nextInt(config.length);
 		return config[key];
 	}
 
 	protected static String textReplace(String input, String buildNumber, String projectName) {
 		String text = new String(input);
-		System.err.println("Text: "+text);
 		if (text.matches("%day%")) {
 			Calendar now = Calendar.getInstance();
 
@@ -90,15 +88,12 @@ public class MemeFactory {
 			text = text.replace("%day%",day);
 		}
 		text = text.replace("%buildNumber%", buildNumber);
-		System.err.println("Text: "+text);
 		text = text.replace("%projectName%", projectName);
-		System.err.println("Text: "+text);
 		return text;
 	}
 
 	protected static String textReplace(String input, String buildNumber, String projectName, String user) {
 		String text = textReplace(input,buildNumber,projectName);
-		System.err.println("Text: "+text);
 		return text.replace("%user%", user);
 	}
 
