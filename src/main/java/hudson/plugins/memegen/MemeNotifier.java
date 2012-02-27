@@ -71,7 +71,7 @@ public class MemeNotifier extends Notifier {
 	private void generate(AbstractBuild build, BuildListener listener) {
 		//System.err.println("generate() Auth: "+DESCRIPTOR.memeUsername+", "+DESCRIPTOR.memePassword);
 
-		listener.getLogger().println("generate() called");
+		listener.getLogger().println("Generating Meme with account "+DESCRIPTOR.memeUsername);
 		final String buildId = build.getProject().getDisplayName() + " " + build.getDisplayName();
 		MemegeneratorAPI memegenAPI = new MemegeneratorAPI(DESCRIPTOR.memeUsername,DESCRIPTOR.memePassword);
 		boolean memeResult;
@@ -106,8 +106,6 @@ public class MemeNotifier extends Notifier {
 	public boolean perform(AbstractBuild<?, ?> build, Launcher launcher,
 		BuildListener listener) throws InterruptedException, IOException {
 		listener.getLogger().println("perform() called");
-		
-		System.err.println("MemeNotifier::perform(): "+enableFailure+", "+enableSucceed+", "+enableAlways);
 
 		if (enableAlways) {
 			listener.getLogger().println("Generating Meme...");
@@ -132,7 +130,7 @@ public class MemeNotifier extends Notifier {
 		public boolean memeEnabledFailure;
 		public boolean memeEnabledSuccess;
 		public boolean memeEnabledAlways;
-		
+
 		DescriptorImpl() {
 			super(MemeNotifier.class);
 			load();
@@ -152,7 +150,7 @@ public class MemeNotifier extends Notifier {
 		@Override
 		public Publisher newInstance(StaplerRequest req, JSONObject formData) throws FormException {
 			boolean enableMeme = req.getParameter("enableMeme") != null;
-			
+
 			try {
 				return new MemeNotifier(memeEnabledFailure,memeEnabledSuccess,memeEnabledAlways);
 			} catch (Exception e) {
