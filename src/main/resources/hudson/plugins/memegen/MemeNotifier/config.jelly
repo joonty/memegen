@@ -1,11 +1,11 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-		<f:entry title="Generate when a build fails">
+		<f:entry title="Generate when a build fails" field="memeEnabledFailure">
 			<f:checkbox name="memeEnabledFailure" checked="${memeEnabledFailure}"/>
 		</f:entry>
-		<f:entry title="Generate when a build succeeds and the previous failed">
+		<f:entry title="Generate when a build succeeds and the previous failed" field="memeEnabledSuccess">
 			<f:checkbox name="memeEnabledSuccess" checked="${memeEnabledSuccess}"/>
 		</f:entry>
-		<f:entry title="Generate for every build (regardless of status)">
+		<f:entry title="Generate for every build (regardless of status)" field="memeEnabledAlways">
 			<f:checkbox name="memeEnabledAlways" checked="${memeEnabledAlways}"/>
 		</f:entry>
 </j:jelly>

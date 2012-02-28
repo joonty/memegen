@@ -65,7 +65,7 @@ public class MemeNotifier extends Notifier {
 		boolean memeResult;
 		try {
 			Result res = build.getResult();
-			Meme meme = MemeFactory.getMeme((res==Result.FAILURE)?DESCRIPTOR.fmemes:DESCRIPTOR.smemes,build);
+			Meme meme = MemeFactory.getMeme((res==Result.FAILURE)?DescriptorImpl.fmemes:DescriptorImpl.smemes,build);
 			memeResult = memegenAPI.instanceCreate(meme);
 
 			if (memeResult) {
@@ -124,8 +124,8 @@ public class MemeNotifier extends Notifier {
 		public String memeUsername;
 		public String memePassword;
 
-		public ArrayList<Meme> smemes = new ArrayList<Meme>();
-		public ArrayList<Meme> fmemes = new ArrayList<Meme>();
+		public static ArrayList<Meme> smemes = new ArrayList<Meme>();
+		public static ArrayList<Meme> fmemes = new ArrayList<Meme>();
 
 		public DescriptorImpl() {
 			super(MemeNotifier.class);
