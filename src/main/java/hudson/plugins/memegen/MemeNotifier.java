@@ -45,7 +45,7 @@ public class MemeNotifier extends Notifier {
 	}
 
 	private void generate(AbstractBuild build, BuildListener listener) {
-		//System.err.println("generate() Auth: "+DESCRIPTOR.memeUsername+", "+DESCRIPTOR.memePassword);
+		System.err.println("generate() Auth: "+DESCRIPTOR.memeUsername+", "+DESCRIPTOR.memePassword);
 
 		listener.getLogger().println("Generating Meme with account "+DESCRIPTOR.memeUsername);
 		final String buildId = build.getProject().getDisplayName() + " " + build.getDisplayName();
@@ -86,6 +86,7 @@ public class MemeNotifier extends Notifier {
 	public boolean perform(AbstractBuild<?, ?> build, Launcher launcher,
 		BuildListener listener) throws InterruptedException, IOException {
 
+		System.err.println("perform(): "+DESCRIPTOR.memeEnabledAlways+", "+DESCRIPTOR.memeEnabledFailure);
 		if (DESCRIPTOR.memeEnabledAlways) {
 			listener.getLogger().println("Generating Meme...");
 			generate(build, listener);
@@ -102,6 +103,7 @@ public class MemeNotifier extends Notifier {
 		return true;
 	}
 
+	@Extension
 	public static final class DescriptorImpl extends BuildStepDescriptor<Publisher> {
 
 		public String memeUsername;
@@ -110,11 +112,10 @@ public class MemeNotifier extends Notifier {
 		public boolean memeEnabledSuccess;
 		public boolean memeEnabledAlways;
 
-		DescriptorImpl() {
+		public DescriptorImpl() {
 			super(MemeNotifier.class);
 			load();
 		}
-
 		/*
 		 * (non-Javadoc)
 		 *
@@ -128,6 +129,7 @@ public class MemeNotifier extends Notifier {
 
 		@Override
 		public boolean configure(StaplerRequest req, JSONObject json) throws FormException {
+			System.err.println("Before: "+memeEnabledAlways+", "+memeEnabledSuccess+", "+memeEnabledFailure);
 			memeUsername = req.getParameter("memeUsername");
 			memePassword = req.getParameter("memePassword");
 			System.err.println("Enabled Always: "+req.getParameter("memeEnabledAlways"));
