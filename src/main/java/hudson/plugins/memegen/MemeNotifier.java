@@ -28,10 +28,17 @@ public class MemeNotifier extends Notifier {
 
 	private static final Logger LOGGER = Logger.getLogger(MemeNotifier.class.getName());
 	private static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
+	public boolean memeEnabledFailure;
+	public boolean memeEnabledSuccess;
+	public boolean memeEnabledAlways;
 
 	@DataBoundConstructor
-	public MemeNotifier() {
+	public MemeNotifier(boolean memeEnabledFailure, boolean memeEnabledSuccess, boolean memeEnabledAlways) {
 		//System.err.println("MemeNotifier called with args: "+memeUsername+", "+memePassword+", "+enableFailure+", "+enableSucceed+", "+enableAlways);
+		this.memeEnabledAlways = memeEnabledAlways;
+		this.memeEnabledSuccess = memeEnabledSuccess;
+		this.memeEnabledFailure = memeEnabledFailure;
+		System.err.println("Params: " + memeEnabledAlways + ", " + memeEnabledSuccess + ", " + memeEnabledFailure);
 	}
 
 
@@ -45,11 +52,11 @@ public class MemeNotifier extends Notifier {
 	}
 
 	private void generate(AbstractBuild build, BuildListener listener) {
-		System.err.println("generate() Auth: "+DESCRIPTOR.memeUsername+", "+DESCRIPTOR.memePassword);
+		System.err.println("generate() Auth: " + DESCRIPTOR.memeUsername + ", " + DESCRIPTOR.memePassword);
 
-		listener.getLogger().println("Generating Meme with account "+DESCRIPTOR.memeUsername);
+		listener.getLogger().println("Generating Meme with account " + DESCRIPTOR.memeUsername);
 		final String buildId = build.getProject().getDisplayName() + " " + build.getDisplayName();
-		MemegeneratorAPI memegenAPI = new MemegeneratorAPI(DESCRIPTOR.memeUsername,DESCRIPTOR.memePassword);
+		MemegeneratorAPI memegenAPI = new MemegeneratorAPI(DESCRIPTOR.memeUsername, DESCRIPTOR.memePassword);
 		boolean memeResult;
 		try {
 			Meme meme = MemeFactory.getMeme(build);
@@ -86,17 +93,17 @@ public class MemeNotifier extends Notifier {
 	public boolean perform(AbstractBuild<?, ?> build, Launcher launcher,
 		BuildListener listener) throws InterruptedException, IOException {
 
-		System.err.println("perform(): "+DESCRIPTOR.memeEnabledAlways+", "+DESCRIPTOR.memeEnabledFailure);
-		if (DESCRIPTOR.memeEnabledAlways) {
+		System.err.println("perform(): " + memeEnabledAlways + ", " + memeEnabledFailure);
+		if (memeEnabledAlways) {
 			listener.getLogger().println("Generating Meme...");
 			generate(build, listener);
-		} else if (DESCRIPTOR.memeEnabledSuccess && build.getResult() == Result.SUCCESS) {
+		} else if (memeEnabledSuccess && build.getResult() == Result.SUCCESS) {
 			AbstractBuild prevBuild = build.getPreviousBuild();
 			if (prevBuild.getResult() == Result.FAILURE) {
 				listener.getLogger().println("Build has returned to successful, generating Meme...");
 				generate(build, listener);
 			}
-		} else if (DESCRIPTOR.memeEnabledFailure && build.getResult() == Result.FAILURE) {
+		} else if (memeEnabledFailure && build.getResult() == Result.FAILURE) {
 			listener.getLogger().println("Build failure, generating Meme...");
 			generate(build, listener);
 		}
@@ -108,9 +115,6 @@ public class MemeNotifier extends Notifier {
 
 		public String memeUsername;
 		public String memePassword;
-		public boolean memeEnabledFailure;
-		public boolean memeEnabledSuccess;
-		public boolean memeEnabledAlways;
 
 		public DescriptorImpl() {
 			super(MemeNotifier.class);
@@ -122,6 +126,7 @@ public class MemeNotifier extends Notifier {
 		 * @see
 		 * hudson.tasks.BuildStepDescriptor#isApplicable(java.lang.Class)
 		 */
+
 		@Override
 		public boolean isApplicable(Class<? extends AbstractProject> jobType) {
 			return true;
@@ -129,15 +134,9 @@ public class MemeNotifier extends Notifier {
 
 		@Override
 		public boolean configure(StaplerRequest req, JSONObject json) throws FormException {
-			System.err.println("Before: "+memeEnabledAlways+", "+memeEnabledSuccess+", "+memeEnabledFailure);
 			memeUsername = req.getParameter("memeUsername");
 			memePassword = req.getParameter("memePassword");
-			System.err.println("Enabled Always: "+req.getParameter("memeEnabledAlways"));
 
-			memeEnabledAlways = req.getParameter("memeEnabledAlways") != null;
-			memeEnabledSuccess = req.getParameter("memeEnabledSuccess") != null;
-			memeEnabledFailure = req.getParameter("memeEnabledFailure") != null;
-			System.err.println("Params: "+memeEnabledAlways+", "+memeEnabledSuccess+", "+memeEnabledFailure);
 			save();
 			return super.configure(req, json);
 		}
