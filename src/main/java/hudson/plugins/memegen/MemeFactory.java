@@ -27,9 +27,11 @@ import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Result;
 import hudson.model.User;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.Iterator;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 /**
  *
@@ -37,35 +39,54 @@ import java.util.Random;
  */
 public class MemeFactory {
 
+	public static ArrayList<Meme> memes = new ArrayList<Meme>();
+
 	public static Meme getMeme(AbstractBuild build) {
 		String resultString = build.getResult().toString();
-		String[] sel = selectConfig(build.getResult());
+		Meme meme = selectMeme(build.getResult());
+		return meme;
+		/*
 		String buildName = build.getDisplayName();
 		String projectName = build.getProject().getDisplayName();
 		String users = userSetToString(build.getCulprits());
 		String text0 = textReplace(sel[2],buildName,projectName,users);
 		String text1 = textReplace(sel[3],buildName,projectName,users);
-		return new Meme(Integer.parseInt(sel[0]),Integer.parseInt(sel[1]),text0,text1);
+		return new Meme(sel[0]+"-"+sel[1],text0,text1);
+		 *
+		 */
 	}
 
-	protected static String[] selectConfig(Result type) {
-		String[][] config;
-		if (type == Result.FAILURE) {
-			config = new String[][] {
+	public static Meme[] getMemes() {
+		return memes.toArray(new Meme[]{});
+	}
+
+	public static void addMeme(Meme meme) {
+		memes.add(meme);
+	}
+
+	protected static Meme selectMeme(Result type) {
+
+		Random rand = new Random();
+		if (true || type == Result.FAILURE) {
+			int key = rand.nextInt(memes.size());
+			return memes.get(key);
+			/*
+			 * 			config = new String[][] {
 				{"74","2485","I don\'t usually commit", "but when I do, I break the build"},
 				{"74","2485","%projectName%?", "I didn\'t like it anyway"},
 				{"74","2485","I don\'t usually break the build", "but when I do, I do it on a %day%"},
 				{"74","2485","Testing?", "I prefer to leave that until production"}
 			};
+			 */
 		} else {
+			int key = rand.nextInt(memes.size());
+			return memes.get(key);
+			/*
+			String[][] config;
 			config = new String[][] {
 				{"74","2485","Build %buildNumber%","Have a drink"}
-			};
+			};*/
 		}
-
-		Random rand = new Random();
-		int key = rand.nextInt(config.length);
-		return config[key];
 	}
 
 	protected static String textReplace(String input, String buildNumber, String projectName) {

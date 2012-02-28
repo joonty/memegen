@@ -23,30 +23,48 @@
  */
 package hudson.plugins.memegen;
 
+import java.io.Serializable;
+import org.kohsuke.stapler.DataBoundConstructor;
+
 /**
  *
  * @author Jon Cairns <jon.cairns@22blue.co.uk>
  */
-public class Meme {
+public class Meme implements Serializable {
 	protected int generatorID;
 	protected int imageID;
-	protected String upperText;
-	protected String lowerText;
+	protected boolean parsed = false;
+	public String identifier;
+	public String upperText;
+	public String lowerText;
 
 	protected String imageURL;
 
-	Meme(int generatorID, int imageID, String upperText, String lowerText) {
-		this.generatorID = generatorID;
-		this.imageID = imageID;
+	public Meme() {}
+
+	@DataBoundConstructor
+	public Meme(String identifier, String lowerText, String upperText) {
+		this.identifier = identifier;
 		this.upperText = upperText;
 		this.lowerText = lowerText;
 	}
 
+	protected void parseIdentifier() {
+		if (!parsed) {
+			String[] id_r = identifier.split("-");
+			generatorID = Integer.parseInt(id_r[0]);
+			imageID = Integer.parseInt(id_r[1]);
+			parsed = true;
+		}
+	}
+
 	public int getGeneratorID() {
+		parseIdentifier();
 		return generatorID;
 	}
 
 	public int getImageID() {
+		parseIdentifier();
 		return imageID;
 	}
 

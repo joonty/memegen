@@ -17,8 +17,30 @@
 			<f:textbox name="memeUsername" value="${descriptor.memeUsername}" />
 		</f:entry>
 		<f:entry title="memegenerator.net password">
-			<f:textbox name="memePassword" value="${descriptor.memePassword}" />
+			<f:password name="memePassword" value="${descriptor.memePassword}" />
 		</f:entry>
-  
+		<f:entry>
+			<f:repeatable var="meme" items="${descriptor.memes}" name="memes" add="Add Meme">
+
+
+				<table width="100%">
+					<div align="right">
+						<f:repeatableDeleteButton value="${%Delete Meme}"/>
+					</div>
+					<f:entry title="${%Plot style}" help="/plugin/plot/help-style.html">
+						<select name="identifier">
+							<f:option value="74-2485">${%The Most Interesting Man In The World}</f:option>
+						</select>
+					</f:entry>
+					<f:entry title="Upper text">
+						<f:textbox name="upperText" value="meme.upperText" />
+					</f:entry>
+
+					<f:entry title="Lower text">
+						<f:textbox name="lowerText" value="meme.lowerText" />
+					</f:entry>
+				</table>
+			</f:repeatable>
+		</f:entry>
 	</f:section>
 </j:jelly>

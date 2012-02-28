@@ -11,12 +11,15 @@ import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Notifier;
 import hudson.tasks.Publisher;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.io.IOException;
 
 import org.kohsuke.stapler.StaplerRequest;
 import net.sf.json.JSONObject;
+import net.sf.json.JSONArray;
 
 import org.kohsuke.stapler.DataBoundConstructor;
 
@@ -116,6 +119,8 @@ public class MemeNotifier extends Notifier {
 		public String memeUsername;
 		public String memePassword;
 
+		public static ArrayList<Meme> memes = new ArrayList<Meme>();
+
 		public DescriptorImpl() {
 			super(MemeNotifier.class);
 			load();
@@ -137,8 +142,25 @@ public class MemeNotifier extends Notifier {
 			memeUsername = req.getParameter("memeUsername");
 			memePassword = req.getParameter("memePassword");
 
+			for (Object data : getArray(json.get("memes"))) {
+				Meme m = req.bindJSON(Meme.class, (JSONObject) data);
+				memes.add(m);
+			}
 			save();
 			return super.configure(req, json);
+		}
+
+		public static JSONArray getArray(Object data) {
+			JSONArray result;
+			if (data instanceof JSONArray) {
+				result = (JSONArray) data;
+			} else {
+				result = new JSONArray();
+				if (data != null) {
+					result.add(data);
+				}
+			}
+			return result;
 		}
 
 		/*
