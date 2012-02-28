@@ -14,18 +14,15 @@
   -->
 	<f:section title="Global Meme Settings">
 		<f:entry title="memegenerator.net username">
-			<f:textbox name="memeUsername" value="${descriptor.memeUsername}" />
+			<f:textbox name="memeUsername" value="${descriptor.getMemeUsername()}" />
 		</f:entry>
 		<f:entry title="memegenerator.net password">
-			<f:password name="memePassword" value="${descriptor.memePassword}" />
+			<f:password name="memePassword" value="${descriptor.getMemePassword()}" />
 		</f:entry>
 		<f:entry title="Memes for successful builds">
-			<f:repeatable var="smeme" items="${descriptor.smemes}" name="smemes" add="Add Meme">
+			<f:repeatable var="smeme" items="${descriptor.getSuccessMemes()}" name="smemes" add="Add Meme">
 				<table width="100%">
 					<f:nested>
-						<div align="right">
-							<f:repeatableDeleteButton value="${%Delete Meme}"/>
-						</div>
 						<f:entry title="${%Meme image}" help="/plugin/plot/help-style.html">
 							<select name="identifier">
 								<f:option value="74-2485" selected="{$smeme.identifier=='74-2485'}">${%The Most Interesting Man In The World}</f:option>
@@ -37,12 +34,15 @@
 						<f:entry title="Lower text">
 							<f:textbox name="lowerText" value="${smeme.lowerText}" />
 						</f:entry>
+						<div align="left">
+							<f:repeatableDeleteButton value="${%Delete Meme}"/>
+						</div>
 					</f:nested>
 				</table>
 			</f:repeatable>
 		</f:entry>
 		<f:entry title="Memes for failed builds">
-			<f:repeatable var="fmeme" items="${descriptor.fmemes}" name="fmemes" add="Add Meme">
+			<f:repeatable var="fmeme" items="${descriptor.getFailMemes()}" name="fmemes" add="Add Meme">
 				<table width="100%">
 					<f:nested>
 						<div align="right">

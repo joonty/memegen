@@ -56,16 +56,16 @@ public class MemeNotifier extends Notifier {
 	}
 
 	private void generate(AbstractBuild build, BuildListener listener) {
-		System.err.println("generate() Auth: " + DESCRIPTOR.memeUsername + ", " + DESCRIPTOR.memePassword);
+		System.err.println("generate() Auth: " + DESCRIPTOR.getMemeUsername() + ", " + DESCRIPTOR.getMemePassword());
 
 		PrintStream output = listener.getLogger();
-		output.println("Generating Meme with account " + DESCRIPTOR.memeUsername);
+		output.println("Generating Meme with account " + DESCRIPTOR.getMemeUsername());
 		final String buildId = build.getProject().getDisplayName() + " " + build.getDisplayName();
-		MemegeneratorAPI memegenAPI = new MemegeneratorAPI(DESCRIPTOR.memeUsername, DESCRIPTOR.memePassword);
+		MemegeneratorAPI memegenAPI = new MemegeneratorAPI(DESCRIPTOR.getMemeUsername(), DESCRIPTOR.getMemePassword());
 		boolean memeResult;
 		try {
 			Result res = build.getResult();
-			Meme meme = MemeFactory.getMeme((res==Result.FAILURE)?DescriptorImpl.fmemes:DescriptorImpl.smemes,build);
+			Meme meme = MemeFactory.getMeme((res==Result.FAILURE)?DESCRIPTOR.getFailMemes():DESCRIPTOR.getSuccessMemes(),build);
 			memeResult = memegenAPI.instanceCreate(meme);
 
 			if (memeResult) {
@@ -80,6 +80,7 @@ public class MemeNotifier extends Notifier {
 				output.println("Sorry, couldn't create a Meme - check the logs for more detail");
 			}
 		} catch (NoMemesException nme) {
+			LOGGER.log(Level.WARNING, "{0}{1}", new Object[]{"Meme generation failed: ", nme.getMessage()});
 			output.println("There are no memes to use! Please add some in the Jenkins configuration page.");
 		} catch (IOException ie) {
 			LOGGER.log(Level.WARNING, "{0}{1}", new Object[]{"Meme generation failed: ", ie.getMessage()});
@@ -124,13 +125,30 @@ public class MemeNotifier extends Notifier {
 		public String memeUsername;
 		public String memePassword;
 
-		public static ArrayList<Meme> smemes = new ArrayList<Meme>();
-		public static ArrayList<Meme> fmemes = new ArrayList<Meme>();
+		public ArrayList<Meme> smemes = new ArrayList<Meme>();
+		public ArrayList<Meme> fmemes = new ArrayList<Meme>();
 
 		public DescriptorImpl() {
 			super(MemeNotifier.class);
 			load();
 		}
+		
+		public String getMemeUsername() {
+			return memeUsername;
+		}
+		
+		public String getMemePassword() {
+			return memePassword;
+		}
+		
+		public ArrayList<Meme> getFailMemes() {
+			return fmemes;
+		}
+		
+		public ArrayList<Meme> getSuccessMemes() {
+			return smemes;
+		}
+		
 		/*
 		 * (non-Javadoc)
 		 *
