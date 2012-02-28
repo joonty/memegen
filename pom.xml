@@ -11,8 +11,8 @@
   </parent>
 
   <groupId>hudson.plugins.memegen</groupId>
-  <artifactId>meme-generator</artifactId>
-  <version>0.1-UNSTABLE</version>
+  <artifactId>memegen</artifactId>
+  <version>0.2</version>
   <packaging>hpi</packaging>
   <name>Meme Generator</name>
   <url>http://wiki.hudson-ci.org/display/HUDSON/Bamboo+Notifier</url>
