@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.io.IOException;
 
+import java.io.PrintStream;
 import org.kohsuke.stapler.StaplerRequest;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONArray;
@@ -57,7 +58,8 @@ public class MemeNotifier extends Notifier {
 	private void generate(AbstractBuild build, BuildListener listener) {
 		System.err.println("generate() Auth: " + DESCRIPTOR.memeUsername + ", " + DESCRIPTOR.memePassword);
 
-		listener.getLogger().println("Generating Meme with account " + DESCRIPTOR.memeUsername);
+		PrintStream output = listener.getLogger();
+		output.println("Generating Meme with account " + DESCRIPTOR.memeUsername);
 		final String buildId = build.getProject().getDisplayName() + " " + build.getDisplayName();
 		MemegeneratorAPI memegenAPI = new MemegeneratorAPI(DESCRIPTOR.memeUsername, DESCRIPTOR.memePassword);
 		boolean memeResult;
@@ -67,7 +69,7 @@ public class MemeNotifier extends Notifier {
 			memeResult = memegenAPI.instanceCreate(meme);
 
 			if (memeResult) {
-				listener.getLogger().println("Meme: " + meme.getImageURL());
+				output.println("Meme: " + meme.getImageURL());
 				build.setDescription("<img class=\"meme\" src=\"" + meme.getImageURL() + "\" />");
 				AbstractProject proj = build.getProject();
 				String desc = proj.getDescription();
@@ -75,14 +77,16 @@ public class MemeNotifier extends Notifier {
 				desc += "<img class=\"meme\" src=\"" + meme.getImageURL() + "\" />";
 				proj.setDescription(desc);
 			} else {
-				listener.getLogger().println("Sorry, couldn't create a Meme - check the logs for more detail");
+				output.println("Sorry, couldn't create a Meme - check the logs for more detail");
 			}
+		} catch (NoMemesException nme) {
+			output.println("There are no memes to use! Please add some in the Jenkins configuration page.");
 		} catch (IOException ie) {
 			LOGGER.log(Level.WARNING, "{0}{1}", new Object[]{"Meme generation failed: ", ie.getMessage()});
-			listener.getLogger().println("Sorry, couldn't create a Meme - check the logs for more detail");
+			output.println("Sorry, couldn't create a Meme - check the logs for more detail");
 		} catch (Exception e) {
 			LOGGER.log(Level.WARNING, "{0}{1}", new Object[]{"Meme generation failed: ", e.getMessage()});
-			listener.getLogger().println("Sorry, couldn't create a Meme - check the logs for more detail");
+			output.println("Sorry, couldn't create a Meme - check the logs for more detail");
 		}
 	}
 

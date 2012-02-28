@@ -54,12 +54,12 @@ public class MemegeneratorAPI {
 
 	private String username;
 	private String password;
-	
+
 	MemegeneratorAPI(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}
-	
+
 	public boolean instanceCreate(Meme meme) {
 		boolean ret = false;
 		HashMap<String,String> vars = new HashMap();
@@ -78,9 +78,13 @@ public class MemegeneratorAPI {
 			conn.setDoOutput(true);
 			JSONObject obj = parseResponse(conn);
 			JSONObject result = (JSONObject)obj.get("result");
+			String memeUrl = (String)result.get("instanceImageUrl");
+			if (!memeUrl.matches("http")) {
+				memeUrl = APIURL + memeUrl;
+			}
 			//Debug the JSON to logs
 			//System.err.println(obj.toJSONString()+", AND "+result.toJSONString());
-			meme.setImageURL(APIURL+(String)result.get("instanceImageUrl"));
+			meme.setImageURL(memeUrl);
 			ret = true;
 
 		} catch (MalformedURLException me) {
