@@ -62,7 +62,8 @@ public class MemeNotifier extends Notifier {
 		MemegeneratorAPI memegenAPI = new MemegeneratorAPI(DESCRIPTOR.memeUsername, DESCRIPTOR.memePassword);
 		boolean memeResult;
 		try {
-			Meme meme = MemeFactory.getMeme(build);
+			Result res = build.getResult();
+			Meme meme = MemeFactory.getMeme((res==Result.FAILURE)?DESCRIPTOR.fmemes:DESCRIPTOR.smemes,build);
 			memeResult = memegenAPI.instanceCreate(meme);
 
 			if (memeResult) {
@@ -119,7 +120,8 @@ public class MemeNotifier extends Notifier {
 		public String memeUsername;
 		public String memePassword;
 
-		public static ArrayList<Meme> memes = new ArrayList<Meme>();
+		public ArrayList<Meme> smemes = new ArrayList<Meme>();
+		public ArrayList<Meme> fmemes = new ArrayList<Meme>();
 
 		public DescriptorImpl() {
 			super(MemeNotifier.class);
@@ -142,9 +144,13 @@ public class MemeNotifier extends Notifier {
 			memeUsername = req.getParameter("memeUsername");
 			memePassword = req.getParameter("memePassword");
 
-			for (Object data : getArray(json.get("memes"))) {
+			for (Object data : getArray(json.get("smemes"))) {
 				Meme m = req.bindJSON(Meme.class, (JSONObject) data);
-				memes.add(m);
+				smemes.add(m);
+			}
+			for (Object data : getArray(json.get("fmemes"))) {
+				Meme m = req.bindJSON(Meme.class, (JSONObject) data);
+				fmemes.add(m);
 			}
 			save();
 			return super.configure(req, json);

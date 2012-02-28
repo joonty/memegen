@@ -39,11 +39,9 @@ import java.util.Random;
  */
 public class MemeFactory {
 
-	public static ArrayList<Meme> memes = new ArrayList<Meme>();
-
-	public static Meme getMeme(AbstractBuild build) {
+	public static Meme getMeme(ArrayList<Meme> memes, AbstractBuild build) {
 		String resultString = build.getResult().toString();
-		Meme meme = selectMeme(build.getResult());
+		Meme meme = selectMeme(memes,build.getResult());
 		return meme;
 		/*
 		String buildName = build.getDisplayName();
@@ -56,15 +54,7 @@ public class MemeFactory {
 		 */
 	}
 
-	public static Meme[] getMemes() {
-		return memes.toArray(new Meme[]{});
-	}
-
-	public static void addMeme(Meme meme) {
-		memes.add(meme);
-	}
-
-	protected static Meme selectMeme(Result type) {
+	protected static Meme selectMeme(ArrayList<Meme> memes,Result type) {
 
 		Random rand = new Random();
 		if (true || type == Result.FAILURE) {
