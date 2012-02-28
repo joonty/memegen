@@ -148,10 +148,12 @@ public class MemeNotifier extends Notifier {
 			memeUsername = req.getParameter("memeUsername");
 			memePassword = req.getParameter("memePassword");
 
+			smemes.clear();
 			for (Object data : getArray(json.get("smemes"))) {
 				Meme m = req.bindJSON(Meme.class, (JSONObject) data);
 				smemes.add(m);
 			}
+			fmemes.clear();
 			for (Object data : getArray(json.get("fmemes"))) {
 				Meme m = req.bindJSON(Meme.class, (JSONObject) data);
 				fmemes.add(m);

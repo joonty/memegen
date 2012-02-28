@@ -79,7 +79,7 @@ public class MemegeneratorAPI {
 			JSONObject obj = parseResponse(conn);
 			JSONObject result = (JSONObject)obj.get("result");
 			String memeUrl = (String)result.get("instanceImageUrl");
-			if (!memeUrl.matches("http")) {
+			if (memeUrl.matches("^http(.*)") == false) {
 				memeUrl = APIURL + memeUrl;
 			}
 			//Debug the JSON to logs
