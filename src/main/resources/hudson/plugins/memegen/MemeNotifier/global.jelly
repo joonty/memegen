@@ -13,54 +13,54 @@
     so it should be straightforward to find them.
   -->
 	<f:section title="Global Meme Settings">
-		<f:entry title="memegenerator.net username">
+		<f:entry title="memegenerator.net username" help="/plugin/memegen/help-memeUsername.html">
 			<f:textbox name="memeUsername" value="${descriptor.getMemeUsername()}" />
 		</f:entry>
-		<f:entry title="memegenerator.net password">
+		<f:entry title="memegenerator.net password"  help="/plugin/memegen/help-memePassword.html">
 			<f:password name="memePassword" value="${descriptor.getMemePassword()}" />
 		</f:entry>
 		<f:entry title="Memes for successful builds">
 			<f:repeatable var="smeme" items="${descriptor.getSuccessMemes()}" name="smemes" add="Add Meme">
-				<table width="100%">
+				<table width="100%" style="border: 1px solid #aaa">
 					<f:nested>
-						<f:entry title="${%Meme image}" help="/plugin/plot/help-style.html">
+						<f:entry title="${%Meme image}" help="/plugin/memegen/help-memeImage.html">
 							<select name="identifier">
 								<f:option value="74-2485" selected="{$smeme.identifier=='74-2485'}">${%The Most Interesting Man In The World}</f:option>
 							</select>
 						</f:entry>
-						<f:entry title="Upper text">
+						<f:entry title="Upper text"  help="/plugin/memegen/help-memeUpperText.html">
 							<f:textbox name="upperText" value="${smeme.upperText}" />
 						</f:entry>
-						<f:entry title="Lower text">
+						<f:entry title="Lower text"   help="/plugin/memegen/help-memeLowerText.html">
 							<f:textbox name="lowerText" value="${smeme.lowerText}" />
 						</f:entry>
-						<div align="left">
-							<f:repeatableDeleteButton value="${%Delete Meme}"/>
-						</div>
 					</f:nested>
 				</table>
+				<div align="left">
+					<f:repeatableDeleteButton value="${%Delete Meme}"/>
+				</div>
 			</f:repeatable>
 		</f:entry>
 		<f:entry title="Memes for failed builds">
 			<f:repeatable var="fmeme" items="${descriptor.getFailMemes()}" name="fmemes" add="Add Meme">
-				<table width="100%">
+				<table width="100%" style="border: 1px solid #aaa">
 					<f:nested>
-						<div align="right">
-							<f:repeatableDeleteButton value="${%Delete Meme}"/>
-						</div>
-						<f:entry title="${%Meme image}" help="/plugin/plot/help-style.html">
+						<f:entry title="${%Meme image}"  help="/plugin/memegen/help-memeImage.html">
 							<select name="identifier">
 								<f:option value="74-2485" selected="{$fmeme.identifier=='74-2485'}">${%The Most Interesting Man In The World}</f:option>
 							</select>
 						</f:entry>
-						<f:entry title="Upper text">
+						<f:entry title="Upper text" help="/plugin/memegen/help-memeUpperText.html">
 							<f:textbox name="upperText" value="${fmeme.upperText}" />
 						</f:entry>
-						<f:entry title="Lower text">
+						<f:entry title="Lower text"  help="/plugin/memegen/help-memeLowerText.html">
 							<f:textbox name="lowerText" value="${fmeme.lowerText}" />
 						</f:entry>
 					</f:nested>
 				</table>
+				<div align="right">
+					<f:repeatableDeleteButton value="${%Delete Meme}"/>
+				</div>
 			</f:repeatable>
 		</f:entry>
 	</f:section>
