@@ -3,7 +3,7 @@
 
 Are your continuous integration processes lacking a certain dimension? Specifically the dimension of purile humour? Fear not. Help is on its way in the form of Memes.
 
-This plugin for Jenkins/Hudson allows you to create a meme (using the [memegenerator.net](http://memegenerator.net) API) when the build fails, returns back to normal, or all the time - you choose. You can also configure which images are used, and supply the text that goes on them. A random meme is chosen from your collection each time. 
+This plugin for Jenkins/Hudson creates a meme (using the [memegenerator.net] API) when the build fails, returns back to normal, or all the time - you choose. The meme is then posted on the project and build page. You can also configure which images are used, and supply the text that goes on them. A random meme is chosen from your collection each time. 
 
 ### Installation 
 
@@ -12,7 +12,26 @@ your Jenkins/Hudson server or upload it using the advanced tab of the plugin man
 
 ### Configuration
 
-Click on "Manage Jenkins" link on the home page. Scroll down to "Global Meme Settings", where you will see various options.
+Go to the system configuration page (Manage Jenkins -> Configure System), and scroll down to "Global Meme Settings". A [memegenerator.net] username and password is required, but signing up is free. These are the only essential configuration options, and the rest are for configuring possible meme images - see below under the heading "Meme configuration".
+
+Finally, the meme generator needs to be enabled for each project that you want them. Go to a project configuration page, scroll down to "Meme generator" and tick the box. You will then see three options, which will determine when memes are created:
+
+- *Generate when a build fails*
+- *Generate when a build succeeds and the previous failed*
+- *Generate for every build (regardless of status)*
+
+As long as there are configured memes and one of the three above options are selected, a meme will be generated and posted on the project and build description.
+
+### Meme configuration
+
+On the system configuration page you can manage the Memes that are generated after both successful and failed builds. This involves choosing the image and entering the text that will appear at the top and bottom of the image. You can also use template variables, which look like ${this}. The possible variables are:
+
+- *${project}* - The project display name
+- *${build}* - The build display name (this will be something like "#33")
+- *${user}* - The user(s) string of the people who contributed between this build and the previous one
+- *${day}* - The current day (e.g. "Monday")
+
+This means that you can put in a string like "Oh no, you broke ${project}", and this will be filled in with the project name during generation.
 
 ### Building
 
@@ -41,3 +60,4 @@ Finally, restart jenkins.
 Copyright &copy; 2012, Jonathan Cairns. Licensed under the [MIT license].
 
 [MIT License]: https://github.com/jenkinsci/jenkins/raw/master/LICENSE.txt
+[memegenerator.net]: http://memegenerator.net
