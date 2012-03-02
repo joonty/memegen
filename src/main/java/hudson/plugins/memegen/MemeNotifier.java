@@ -132,30 +132,49 @@ public class MemeNotifier extends Notifier {
 			super(MemeNotifier.class);
 			load();
 		}
-		
+
 		public String getMemeUsername() {
 			return memeUsername;
 		}
-		
+
 		public String getMemePassword() {
 			return memePassword;
 		}
-		
+
 		public ArrayList<Meme> getFailMemes() {
-			return fmemes;
+			if (fmemes.isEmpty()) {
+				return getDefaultFailMemes();
+			} else {
+				return fmemes;
+			}
 		}
-		
+
 		public ArrayList<Meme> getSuccessMemes() {
+			if (smemes.isEmpty()) {
+				return getDefaultSuccessMemes();
+			} else {
+				return smemes;
+			}
+		}
+
+		private ArrayList<Meme> getDefaultSuccessMemes() {
+			String[][] list = getMemeList();
+			smemes.add(new Meme(list[0][0],"But when I do, I win","I don't always commit"));
 			return smemes;
 		}
-		
+
+		private ArrayList<Meme> getDefaultFailMemes() {
+			String[][] list = getMemeList();
+			fmemes.add(new Meme(list[0][0],"But when I do, I break the build","I don't always commit"));
+			return fmemes;
+		}
+
 		/*
 		 * (non-Javadoc)
 		 *
 		 * @see
 		 * hudson.tasks.BuildStepDescriptor#isApplicable(java.lang.Class)
 		 */
-
 		@Override
 		public boolean isApplicable(Class<? extends AbstractProject> jobType) {
 			return true;
@@ -193,6 +212,31 @@ public class MemeNotifier extends Notifier {
 			return result;
 		}
 
+		public String[][] getMemeList() {
+			return new String[][] {
+				{"74-2485","The Most Interesting Man In The World"},
+				{"2-166088","Y U No"},
+				{"17-984","Philosoraptor"},
+				{"305-84688","Futurama Fry"},
+				{"121-1031","Success Kid"},
+				{"116-142442","Forever Alone"},
+				{"29-983","Socially Awkward Penguin"},
+				{"534-699717","Good Guy Greg"},
+				{"3-203","Foul Bachelor Frog"},
+				{"45-20","Insanity Wolf"},
+				{"54-42","Joseph Ducreux"},
+				{"79-108785","Yo Dawg"},
+				{"111-1436","High Expectations Asian Father"},
+				{"112-288872","Paranoid Parrot"},
+				{"308-332591","Business Cat"},
+				{"225-32","Advice Dog"},
+				{"113750-1591284","iHate"},
+				{"96-89714","Bear Grylls"},
+				{"629-963","Advice Yoda Gives"},
+				{"5588-4944","Chuck Norris"},
+				{"5115-1110726","Chemistry Cat"},
+			};
+		}
 		/*
 		 * (non-Javadoc)
 		 *

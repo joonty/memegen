@@ -25,7 +25,9 @@
 					<f:nested>
 						<f:entry title="${%Meme image}" help="/plugin/memegen/help-memeImage.html">
 							<select name="identifier">
-								<f:option value="74-2485" selected="{$smeme.identifier=='74-2485'}">${%The Most Interesting Man In The World}</f:option>
+								<j:forEach items="${descriptor.getMemeList()}" var="i">
+									<f:option value="${i[0]}" selected="${smeme.identifier==i[0]}">${i[1]}</f:option>
+								</j:forEach>
 							</select>
 						</f:entry>
 						<f:entry title="Upper text"  help="/plugin/memegen/help-memeUpperText.html">
@@ -36,9 +38,10 @@
 						</f:entry>
 					</f:nested>
 				</table>
-				<div align="left">
+				<div align="right">
 					<f:repeatableDeleteButton value="${%Delete Meme}"/>
 				</div>
+				<br />
 			</f:repeatable>
 		</f:entry>
 		<f:entry title="Memes for failed builds">
@@ -47,7 +50,9 @@
 					<f:nested>
 						<f:entry title="${%Meme image}"  help="/plugin/memegen/help-memeImage.html">
 							<select name="identifier">
-								<f:option value="74-2485" selected="{$fmeme.identifier=='74-2485'}">${%The Most Interesting Man In The World}</f:option>
+								<j:forEach items="${descriptor.getMemeList()}" var="i">
+									<f:option value="${i[0]}" selected="${fmeme.identifier==i[0]}">${i[1]}</f:option>
+								</j:forEach>
 							</select>
 						</f:entry>
 						<f:entry title="Upper text" help="/plugin/memegen/help-memeUpperText.html">
@@ -61,6 +66,7 @@
 				<div align="right">
 					<f:repeatableDeleteButton value="${%Delete Meme}"/>
 				</div>
+				<br />
 			</f:repeatable>
 		</f:entry>
 	</f:section>
