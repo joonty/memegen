@@ -3,19 +3,16 @@
   <parent>
     <groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <!--
-      which version of Hudson is this plugin built against?
-    -->
     <version>1.355</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <groupId>hudson.plugins.memegen</groupId>
   <artifactId>memegen</artifactId>
-  <version>0.2</version>
+  <version>0.3</version>
   <packaging>hpi</packaging>
   <name>Meme Generator</name>
-  <url>http://wiki.hudson-ci.org/display/HUDSON/Bamboo+Notifier</url>
+  <url>http://wiki.hudson-ci.org/display/HUDSON/Meme+Generator</url>
 
   <scm>
     <connection>scm:git:https://github.com/joonty/memegen.git</connection>
@@ -27,15 +24,15 @@
     <!-- which version of Hudson is this plugin built against? -->
     <hudson.version>${project.parent.version}</hudson.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.net.id>asgeirn</java.net.id>
+    <java.net.id>joonty</java.net.id>
   </properties>
 
   <developers>
     <developer>
-      <id>asgeirn</id>
-      <email>asgeir@twingine.no</email>
-      <name>Asgeir Storesund Nilsen</name>
-      <timezone>1</timezone>
+      <id>joonty</id>
+      <email>jon@joncairns.com</email>
+      <name>Jon Cairns</name>
+      <timezone>0</timezone>
     </developer>
   </developers>
 
