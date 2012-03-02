@@ -31,7 +31,6 @@ import org.kohsuke.stapler.DataBoundConstructor;
 public class MemeNotifier extends Notifier {
 
 	private static final Logger LOGGER = Logger.getLogger(MemeNotifier.class.getName());
-	private static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
 	public boolean memeEnabledFailure;
 	public boolean memeEnabledSuccess;
 	public boolean memeEnabledAlways;
@@ -56,16 +55,16 @@ public class MemeNotifier extends Notifier {
 	}
 
 	private void generate(AbstractBuild build, BuildListener listener) {
-		System.err.println("generate() Auth: " + DESCRIPTOR.getMemeUsername() + ", " + DESCRIPTOR.getMemePassword());
+		System.err.println("generate() Auth: " + ((DescriptorImpl) getDescriptor()).getMemeUsername() + ", " + ((DescriptorImpl) getDescriptor()).getMemePassword());
 
 		PrintStream output = listener.getLogger();
-		output.println("Generating Meme with account " + DESCRIPTOR.getMemeUsername());
+		output.println("Generating Meme with account " + ((DescriptorImpl) getDescriptor()).getMemeUsername());
 		final String buildId = build.getProject().getDisplayName() + " " + build.getDisplayName();
-		MemegeneratorAPI memegenAPI = new MemegeneratorAPI(DESCRIPTOR.getMemeUsername(), DESCRIPTOR.getMemePassword());
+		MemegeneratorAPI memegenAPI = new MemegeneratorAPI(((DescriptorImpl) getDescriptor()).getMemeUsername(), ((DescriptorImpl) getDescriptor()).getMemePassword());
 		boolean memeResult;
 		try {
 			Result res = build.getResult();
-			Meme meme = MemeFactory.getMeme((res==Result.FAILURE)?DESCRIPTOR.getFailMemes():DESCRIPTOR.getSuccessMemes(),build);
+			Meme meme = MemeFactory.getMeme((res==Result.FAILURE)?((DescriptorImpl) getDescriptor()).getFailMemes():((DescriptorImpl) getDescriptor()).getSuccessMemes(),build);
 			memeResult = memegenAPI.instanceCreate(meme);
 
 			if (memeResult) {
