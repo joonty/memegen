@@ -16,8 +16,8 @@
 	<url>http://wiki.jenkins-ci.org/display/JENKINS/Meme+Generator+Plugin</url>
 
 	<scm>
-		<connection>scm:git:ssh://github.com/jenkinsci/memegen.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com:jenkinsci/memegen.git</developerConnection>
+		<connection>scm:git:ssh://github.com/jenkinsci/memegen-plugin.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/jenkinsci/memegen-plugin.git</developerConnection>
 		<url>https://github.com/jenkinsci/memegen</url>
 	</scm>
 
