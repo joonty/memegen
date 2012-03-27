@@ -6,8 +6,9 @@ Are your continuous integration processes lacking a certain dimension? Specifica
 This plugin for Jenkins/Hudson creates a meme (using the [memegenerator.net] API) when the build fails, returns back to normal, or all the time - you choose. The meme is then posted on the project and build page. You can also configure which images are used, and supply the text that goes on them. A random meme is chosen from your collection each time. 
 
 ### Installation 
+By far the easiest way to install this plugin is through the Jenkins update center.
 
-Download [memegen.hpi](/downloads/joonty/memegen/memegen.hpi) from the downloads section. You can then either copy it to `/var/lib/hudson/plugins/` on
+However, if you're feeling cheeky, download [memegen.hpi](/downloads/joonty/memegen/memegen.hpi) from the downloads section. You can then either copy it to `/var/lib/hudson/plugins/` on
 your Jenkins/Hudson server or upload it using the advanced tab of the plugin manager. Then give Jenkins a restart to activate the plugin.
 
 ### Configuration
