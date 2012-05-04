@@ -62,25 +62,12 @@ public class MemeFactory {
 			case 0:
 				throw new NoMemesException();
 			case 1:
-				return memes.get(0);
+				return memes.get(0).clone();
 			default:
 				Random rand = new Random();
 				int key = rand.nextInt(memes.size());
-				return memes.get(key);
+				return memes.get(key).clone();
 		}
-		/*
-		 * 			config = new String[][] {
-		{"74","2485","I don\'t usually commit", "but when I do, I break the build"},
-		{"74","2485","%projectName%?", "I didn\'t like it anyway"},
-		{"74","2485","I don\'t usually break the build", "but when I do, I do it on a %day%"},
-		{"74","2485","Testing?", "I prefer to leave that until production"}
-		};
-		 */
-		/*
-		String[][] config;
-		config = new String[][] {
-		{"74","2485","Build %buildNumber%","Have a drink"}
-		};*/
 	}
 
 	protected static String textReplace(String input, String buildNumber, String projectName) {

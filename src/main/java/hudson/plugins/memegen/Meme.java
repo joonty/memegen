@@ -83,4 +83,8 @@ public class Meme implements Serializable {
 	public String getImageURL() {
 		return imageURL;
 	}
+
+	public Meme clone() {
+		return new Meme(identifier,lowerText,upperText);
+	} 
 }

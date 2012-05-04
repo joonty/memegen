@@ -41,7 +41,6 @@ public class MemeNotifier extends Notifier {
 		this.memeEnabledAlways = memeEnabledAlways;
 		this.memeEnabledSuccess = memeEnabledSuccess;
 		this.memeEnabledFailure = memeEnabledFailure;
-		System.err.println("Params: " + memeEnabledAlways + ", " + memeEnabledSuccess + ", " + memeEnabledFailure);
 	}
 
 
@@ -55,7 +54,6 @@ public class MemeNotifier extends Notifier {
 	}
 
 	private void generate(AbstractBuild build, BuildListener listener) {
-		System.err.println("generate() Auth: " + ((DescriptorImpl) getDescriptor()).getMemeUsername() + ", " + ((DescriptorImpl) getDescriptor()).getMemePassword());
 
 		PrintStream output = listener.getLogger();
 		output.println("Generating Meme with account " + ((DescriptorImpl) getDescriptor()).getMemeUsername());
@@ -101,7 +99,6 @@ public class MemeNotifier extends Notifier {
 	public boolean perform(AbstractBuild<?, ?> build, Launcher launcher,
 		BuildListener listener) throws InterruptedException, IOException {
 
-		System.err.println("perform(): " + memeEnabledAlways + ", " + memeEnabledFailure);
 		if (memeEnabledAlways) {
 			listener.getLogger().println("Generating Meme...");
 			generate(build, listener);
