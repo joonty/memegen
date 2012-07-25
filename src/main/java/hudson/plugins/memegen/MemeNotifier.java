@@ -104,7 +104,7 @@ public class MemeNotifier extends Notifier {
 			generate(build, listener);
 		} else if (memeEnabledSuccess && build.getResult() == Result.SUCCESS) {
 			AbstractBuild prevBuild = build.getPreviousBuild();
-			if (prevBuild.getResult() == Result.FAILURE) {
+			if (prevBuild != null && prevBuild.getResult() == Result.FAILURE) {
 				listener.getLogger().println("Build has returned to successful, generating Meme...");
 				generate(build, listener);
 			}
