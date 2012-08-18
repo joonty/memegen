@@ -1,4 +1,7 @@
 ## Meme Generator for Jenkins CI and Hudson
+
+**Note:** Please use the Jenkins fork of this repository at https://github.com/jenkinsci/memegen-plugin. For the latest stable package go to http://wiki.jenkins-ci.org/display/JENKINS/Meme+Generator+Plugin.
+
 ### Post a Meme on the project page, whenever you like
 
 Are your continuous integration processes lacking a certain dimension? Specifically the dimension of purile humour? Fear not. Help is on its way in the form of Memes.
