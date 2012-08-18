@@ -37,7 +37,6 @@ public class MemeNotifier extends Notifier {
 
 	@DataBoundConstructor
 	public MemeNotifier(boolean memeEnabledFailure, boolean memeEnabledSuccess, boolean memeEnabledAlways) {
-		//System.err.println("MemeNotifier called with args: "+memeUsername+", "+memePassword+", "+enableFailure+", "+enableSucceed+", "+enableAlways);
 		this.memeEnabledAlways = memeEnabledAlways;
 		this.memeEnabledSuccess = memeEnabledSuccess;
 		this.memeEnabledFailure = memeEnabledFailure;
@@ -67,12 +66,11 @@ public class MemeNotifier extends Notifier {
 
 			if (memeResult) {
 				output.println("Meme: " + meme.getImageURL());
-				build.setDescription("<img class=\"meme\" src=\"" + meme.getImageURL() + "\" />");
+				if (((DescriptorImpl) getDescriptor()).isBuildDescriptionEnabled()) {
+					addToBuildDescription(build,meme);
+				}
 				AbstractProject proj = build.getProject();
-				String desc = proj.getDescription();
-				desc = desc.replaceAll("<img class=\"meme\"[^>]+>", "");
-				desc += "<img class=\"meme\" src=\"" + meme.getImageURL() + "\" />";
-				proj.setDescription(desc);
+				addToProjectDescription(proj,meme);
 			} else {
 				output.println("Sorry, couldn't create a Meme - check the logs for more detail");
 			}
@@ -86,6 +84,17 @@ public class MemeNotifier extends Notifier {
 			LOGGER.log(Level.WARNING, "{0}{1}", new Object[]{"Meme generation failed: ", e.getMessage()});
 			output.println("Sorry, couldn't create a Meme - check the logs for more detail");
 		}
+	}
+
+	private void addToBuildDescription(AbstractBuild build, Meme meme) throws IOException {
+			build.setDescription("<img class=\"meme\" src=\"" + meme.getImageURL() + "\" />");
+	}
+
+	private void addToProjectDescription(AbstractProject proj, Meme meme) throws IOException {
+			String desc = proj.getDescription();
+			desc = desc.replaceAll("<img class=\"meme\"[^>]+>", "");
+			desc += "<img class=\"meme\" src=\"" + meme.getImageURL() + "\" />";
+			proj.setDescription(desc);
 	}
 
 	/*
@@ -120,6 +129,7 @@ public class MemeNotifier extends Notifier {
 
 		public String memeUsername;
 		public String memePassword;
+		public boolean buildDescriptionEnabled;
 
 		public ArrayList<Meme> smemes = new ArrayList<Meme>();
 		public ArrayList<Meme> fmemes = new ArrayList<Meme>();
@@ -127,6 +137,10 @@ public class MemeNotifier extends Notifier {
 		public DescriptorImpl() {
 			super(MemeNotifier.class);
 			load();
+		}
+
+		public boolean isBuildDescriptionEnabled() {
+			return buildDescriptionEnabled;
 		}
 
 		public String getMemeUsername() {
@@ -180,6 +194,15 @@ public class MemeNotifier extends Notifier {
 		public boolean configure(StaplerRequest req, JSONObject json) throws FormException {
 			memeUsername = req.getParameter("memeUsername");
 			memePassword = req.getParameter("memePassword");
+			String bdChecked = req.getParameter("buildDescriptionEnabled");
+			System.err.println("Check box value: "+bdChecked);
+			if (bdChecked != null && bdChecked.equals("on")) {
+				System.err.println("Build description is enabled");
+				buildDescriptionEnabled = true;
+			} else {
+				System.err.println("Build description is NOT enabled");
+				buildDescriptionEnabled = false;
+			}
 
 			smemes.clear();
 			for (Object data : getArray(json.get("smemes"))) {
