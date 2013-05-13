@@ -23,6 +23,7 @@
  */
 package hudson.plugins.memegen;
 
+import hudson.ProxyConfiguration;
 import java.util.*;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -73,7 +74,7 @@ public class MemegeneratorAPI {
 		try {
 			URL url = buildURL("Instance_Create",vars);
 
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			HttpURLConnection conn = (HttpURLConnection) ProxyConfiguration.open(url);
 			HttpURLConnection.setFollowRedirects(true);
 			conn.setDoOutput(true);
 			JSONObject obj = parseResponse(conn);
