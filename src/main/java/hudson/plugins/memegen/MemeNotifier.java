@@ -87,7 +87,7 @@ public class MemeNotifier extends Notifier {
 	}
 
 	private void addToBuildDescription(AbstractBuild build, Meme meme) throws IOException {
-			build.setDescription("<img class=\"meme\" src=\"" + meme.getImageURL() + "\" />");
+			build.setDescription("<img class=\"meme-build\" src=\"" + meme.getImageURL() + "\" />");
 	}
 
 	private void addToProjectDescription(AbstractProject proj, Meme meme) throws IOException {
