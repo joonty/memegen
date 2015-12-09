@@ -6,7 +6,7 @@
 
 Are your continuous integration processes lacking a certain dimension? Specifically the dimension of purile humour? Fear not. Help is on its way in the form of Memes.
 
-This plugin for Jenkins/Hudson creates a meme (using the [memegenerator.net] API) when the build fails, returns back to normal, or all the time - you choose. The meme is then posted on the project and build page. You can also configure which images are used, and supply the text that goes on them. A random meme is chosen from your collection each time. 
+This plugin for Jenkins/Hudson creates a meme via [apimeme.com] when the build fails, returns back to normal, or all the time - you choose. The meme is then posted on the project and build page. You can also configure which images are used, and supply the text that goes on them. A random meme is chosen from your collection each time. 
 
 ### Installation 
 By far the easiest way to install this plugin is through the Jenkins update center.
@@ -16,7 +16,7 @@ your Jenkins/Hudson server or upload it using the advanced tab of the plugin man
 
 ### Configuration
 
-Go to the system configuration page (Manage Jenkins -> Configure System), and scroll down to "Global Meme Settings". A [memegenerator.net] username and password is required, but signing up is free. These are the only essential configuration options, and the rest are for configuring possible meme images - see below under the heading "Meme configuration".
+Go to the system configuration page (Manage Jenkins -> Configure System), and scroll down to "Global Meme Settings". There's already a default meme for a successful build and a failed build, but you can change the image and text, and add multiple memes for each scenario which will be selected randomly.
 
 Finally, the meme generator needs to be enabled for each project that you want them. Go to a project configuration page, scroll down to "Meme generator" and tick the box. You will then see three options, which will determine when memes are created:
 
@@ -64,4 +64,4 @@ Finally, restart jenkins.
 Copyright &copy; 2012, Jonathan Cairns. Licensed under the [MIT license].
 
 [MIT License]: https://github.com/jenkinsci/jenkins/raw/master/LICENSE.txt
-[memegenerator.net]: http://memegenerator.net
+[apimeme.com]: http://apimeme.com
