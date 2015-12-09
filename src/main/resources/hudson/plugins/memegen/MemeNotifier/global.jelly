@@ -13,12 +13,6 @@
     so it should be straightforward to find them.
   -->
 	<f:section title="Global Meme Settings">
-		<f:entry title="memegenerator.net username" help="/plugin/memegen/help-memeUsername.html">
-			<f:textbox name="memeUsername" value="${descriptor.getMemeUsername()}" />
-		</f:entry>
-		<f:entry title="memegenerator.net password"  help="/plugin/memegen/help-memePassword.html">
-			<f:password name="memePassword" value="${descriptor.getMemePassword()}" />
-		</f:entry>
 		<f:entry title="Add the memes to the build description" help="/plugin/memegen/help-buildDescriptionEnabled.html">
 			<f:checkbox name="buildDescriptionEnabled" checked="${descriptor.isBuildDescriptionEnabled()}"/>
 		</f:entry>
@@ -29,7 +23,7 @@
 						<f:entry title="${%Meme image}" help="/plugin/memegen/help-memeImage.html">
 							<select name="identifier">
 								<j:forEach items="${descriptor.getMemeList()}" var="i">
-									<f:option value="${i[0]}" selected="${smeme.identifier==i[0]}">${i[1]}</f:option>
+									<f:option value="${i}" selected="${smeme.identifier==i}">${i}</f:option>
 								</j:forEach>
 							</select>
 						</f:entry>
@@ -54,7 +48,7 @@
 						<f:entry title="${%Meme image}"  help="/plugin/memegen/help-memeImage.html">
 							<select name="identifier">
 								<j:forEach items="${descriptor.getMemeList()}" var="i">
-									<f:option value="${i[0]}" selected="${fmeme.identifier==i[0]}">${i[1]}</f:option>
+									<f:option value="${i}" selected="${fmeme.identifier==i}">${i}</f:option>
 								</j:forEach>
 							</select>
 						</f:entry>

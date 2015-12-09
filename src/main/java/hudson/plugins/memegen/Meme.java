@@ -24,6 +24,8 @@
 package hudson.plugins.memegen;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 /**
@@ -31,60 +33,44 @@ import org.kohsuke.stapler.DataBoundConstructor;
  * @author Jon Cairns <jon.cairns@22blue.co.uk>
  */
 public class Meme implements Serializable {
-	protected int generatorID;
-	protected int imageID;
-	protected boolean parsed = false;
-	public String identifier;
-	public String upperText;
-	public String lowerText;
 
-	protected String imageURL;
+    protected int generatorID;
+    protected int imageID;
+    protected boolean parsed = false;
+    public String identifier;
+    public String upperText;
+    public String lowerText;
 
-	public Meme() {}
+    protected String imageURL;
 
-	@DataBoundConstructor
-	public Meme(String identifier, String lowerText, String upperText) {
-		this.identifier = identifier;
-		this.upperText = upperText;
-		this.lowerText = lowerText;
-	}
+    @DataBoundConstructor
+    public Meme(String identifier, String lowerText, String upperText) {
+        this.identifier = identifier;
+        this.upperText = upperText;
+        this.lowerText = lowerText;
+    }
 
-	protected void parseIdentifier() {
-		if (!parsed) {
-			String[] id_r = identifier.split("-");
-			generatorID = Integer.parseInt(id_r[0]);
-			imageID = Integer.parseInt(id_r[1]);
-			parsed = true;
-		}
-	}
+    public String getUpperText() {
+        return upperText;
+    }
 
-	public int getGeneratorID() {
-		parseIdentifier();
-		return generatorID;
-	}
+    public String getLowerText() {
+        return lowerText;
+    }
 
-	public int getImageID() {
-		parseIdentifier();
-		return imageID;
-	}
+    public String getImageURL() {
+        return "http://apimeme.com/meme?meme=" + identifier + "&top=" + encode(upperText) + "&bottom=" + encode(lowerText);
+    }
 
-	public String getUpperText() {
-		return upperText;
-	}
+    public Meme clone() {
+        return new Meme(identifier, lowerText, upperText);
+    }
 
-	public String getLowerText() {
-		return lowerText;
-	}
-
-	public void setImageURL(String URL) {
-		imageURL = URL;
-	}
-
-	public String getImageURL() {
-		return imageURL;
-	}
-
-	public Meme clone() {
-		return new Meme(identifier,lowerText,upperText);
-	} 
+    private static String encode(String text) {
+        try {
+            return URLEncoder.encode(text, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return text;
+        }
+    }
 }
