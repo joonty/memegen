@@ -11,8 +11,7 @@ This plugin for Jenkins/Hudson creates a meme via [apimeme.com] when the build f
 ### Installation 
 By far the easiest way to install this plugin is through the Jenkins update center.
 
-However, if you're feeling cheeky, download [memegen.hpi](/downloads/joonty/memegen/memegen.hpi) from the downloads section. You can then either copy it to `/var/lib/hudson/plugins/` on
-your Jenkins/Hudson server or upload it using the advanced tab of the plugin manager. Then give Jenkins a restart to activate the plugin.
+However, if you'd prefer to install it manually, download [memegen.hpi](http://updates.jenkins-ci.org/latest/memegen.hpi) from the [Jenkins plugin page](https://wiki.jenkins-ci.org/display/JENKINS/Meme+Generator+Plugin). You can then either copy it to `/var/lib/hudson/plugins/` on your Jenkins/Hudson server or upload it using the advanced tab of the plugin manager. Then give Jenkins a restart to activate the plugin.
 
 ### Configuration
 
